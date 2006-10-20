@@ -1,0 +1,125 @@
+*ft-plaintex*	Support for plaintex (plain TeX) file type
+
+For Vim version 7.0+.  Last change:  2006 Oct 20
+
+		  VIM REFERENCE MANUAL    by Benji Fisher
+
+1. Compiler Plugin					|plaintex-compiler|
+2. Key Mappings						|plaintex-keymaps|
+3. Configuration					|plaintex-configure|
+4. Bugs and Todo List					|plaintex-bugs|
+
+The functionality mentioned here is a filetype plugin, see |ftplugins|.
+It adds to the functionality of the default ftplugin for plaintex; it neither
+duplicates nor overrides the default ftplugin.
+This package contains the following files, to be installed under a directory
+in your |runtimepath|: >
+	doc/ft-plaintex.txt
+	compiler/plaintex.vim
+	ftplugin/plaintex.vim
+
+{Vi does not have any of this}
+
+==============================================================================
+1. Compiler Plugin					*plaintex-compiler*
+
+The ftplugin calls the compiler plugin contained in this package, which sets
+the 'errorformat' and 'makeprg' options so that you can run tex (or pdftex)
+with the command >
+	:make
+See Chapter |30.1| in the Users' Manual for an explanation of the quickfix
+commands.
+
+==============================================================================
+2. Key Mappings						*plaintex-keymaps*
+
+As usual, any key can be used in |Insert| mode without any mapping if you
+precede it with CTRL-V. |i_CTRL-V|.
+
+SMART QUOTES						*plaintex-quotes*
+
+When you type a quote character (") in Insert mode, it is automagically
+converted to `` or '' unless it is preceded by a backslash (\) or inside math
+mode.
+
+MARKERS					*plaintex-markers* *plaintex-CTRL-J*
+
+Some of the mappings described below will insert the markers "<+" and "+>"
+into the text, and you may also insert these yourself.  This is especially
+useful for pre-written templates.  You can jump to the next marker (starting
+in either |Insert| mode or |Normal| mode) by typing CTRL-J.  If there is text
+between the markers, then it will be highlighted in |Select| mode (including
+the surrounding markers) so that you can immediately replace it.  If the
+markers are empty, then "<++>" will be deleted and you will end in Insert
+mode.
+
+CHANGING FONTS				*plaintex-CTRL-B* *plaintex-CTRL-T*
+
+If you type CTRL-B in |Visual| mode, the selected text will be precedded by
+"{\bf " and followed by "}".  In |Normal| mode, this will be done with the
+|word| under the cursor.  If you type CTRL-B in |Insert| mode, then
+"{\bf }<++>" will be inserted, with the cursor positioned inside the braces.
+When you are done typing the bold text, you can jump to the markers with
+CRTL-J as described above.
+
+Similarly, you can use CTRL-T in |Visual| mode, |Normal| mode, or |Insert|
+mode to insert "{\it " and "\/}" automatically.  Note that CTRL-I cannot be
+used, since it is equivalent to a tab character.
+
+==============================================================================
+3. Configuration			*plaintex-configure* *plaintex-vimrc*
+
+The file ftplugin/plaintex.vim contains a configuration section.  You may edit
+it directly, or you may copy it to a separate user-configuration file,
+ftplugin/plaintex.vimrc .  If you have made any changes to the ftplugin file,
+you should write them to a user-configuration file before replacing the
+ftplugin file with an updated version.  The user-configuration file will be
+|:source|'d after the configuration section, so it will override choices made
+there.  You can define any of the following variables:
+
+	g:TeX_SmartQuotes is a |Dictionary| with two entries:
+	g:TeX_SmartQuotes['open'] specifies the string to use instead of "``"
+	as an open quote, and g:TeX_SmartQuotes['close'] specifies the string
+	to use instead of "''" to close a quote.  You can also specify the
+	|buffer-variable| b:TeX_SmartQuotes; if this buffer-local version
+	exists, it will override the global one.
+
+	g:Tex_strictquote is a |String| taking one of the values "open",
+	"close", or "both".  You only need to define this if your setting for
+	g:Tex_strictquote confuses the script.  You can also specify the
+	|buffer-variable| b:Tex_strictquote; if this buffer-local version
+	exists, it will override the global one.
+
+	g:Tex_DefaultTargetFormat is a |String| taking one of the values "dvi"
+	or "pdf".  Use it to specify whether you want output in DVI format or
+	(using pdftex) in PDF format.
+
+	g:Tex_Keymaps is a |Dictionary| you can use to override the default
+	keys used in the mappings described above |plaintex-keymaps|.  The
+	same key will always be used in all modes for which the mapping is
+	defined.  The keys "jump", "bold", and "italic" are recognized.  The
+	values should be something that can be used as the {lhs} of a |:map|
+	command.  For example, the default value for "bold" is "<C-B>".
+
+==============================================================================
+4. Bugs and Todo List					*plaintex-bugs*
+
+BUGS
+
+The 'errorformat' setting in the compiler plugin does not work perfectly.  I
+notice problems sometimes when there are a lot of errors.
+
+More testing is needed.
+
+TODO
+
+Define a map to invoke a viewer (xdvi or xpdf or ...)
+
+Create menus to change configuration variables and as alternatives to the
+available maps.
+
+Perhaps provide a way to set TeX-related environment variables such as
+TEXINPUTS.
+
+==============================================================================
+vim:ft=help:tw=78:fo=tcq2:
