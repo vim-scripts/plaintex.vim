@@ -33,6 +33,9 @@ commands.
 ==============================================================================
 2. Key Mappings						*plaintex-keymaps*
 
+All the keys mapped by this plugin (and some functions that are not mapped to
+keys) are summarized in its menu (default TeX in the menu bar).
+
 As usual, any key can be used in |Insert| mode without any mapping if you
 precede it with CTRL-V. |i_CTRL-V|.
 
@@ -77,6 +80,10 @@ ftplugin file with an updated version.  The user-configuration file will be
 |:source|'d after the configuration section, so it will override choices made
 there.  You can define any of the following variables:
 
+	g:Tex_menuRoot is a |String| that specifies the menu that will be used
+	by the plugin.  If left undefined, the plugin will define the
+	top-level menu TeX (using "X" as the keyboard shortcut).
+
 	g:TeX_SmartQuotes is a |Dictionary| with two entries:
 	g:TeX_SmartQuotes['open'] specifies the string to use instead of "``"
 	as an open quote, and g:TeX_SmartQuotes['close'] specifies the string
@@ -115,8 +122,7 @@ TODO
 
 Define a map to invoke a viewer (xdvi or xpdf or ...)
 
-Create menus to change configuration variables and as alternatives to the
-available maps.
+Create menus to change configuration variables and to edit the .vimrc file.
 
 Perhaps provide a way to set TeX-related environment variables such as
 TEXINPUTS.
